@@ -5,7 +5,6 @@
 using namespace std;
 
 int dists[100][100];
-int edges[100][100];
 
 void solution() {
     int N, M, x, y, cost;
@@ -14,13 +13,12 @@ void solution() {
     for (y = 0; y < N; ++y) {
         for (x = 0; x < N; ++x) {
             dists[y][x] = INF;
-            edges[y][x] = INF;
         }
     }
     while (M--) {
         cin >> x >> y >> cost;
         x--, y--;
-        dists[x][y] = edges[x][y] = min(cost, edges[x][y]);
+        dists[x][y] = min(cost, dists[x][y]);
     }
 
     for (int k = 0; k < N; ++k) {
