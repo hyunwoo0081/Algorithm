@@ -6,15 +6,14 @@ long long getZ(long long x) {
     if (x <= 0) return 0;
     if (x == 1) return 1;
 
-    long long digit = 2, nOf2 = 4;
-    while (nOf2-1 <= x)
-        ++digit, nOf2 <<= 1;
-    --digit, nOf2 >>= 1;
+    int digit;
+    for (digit = 2; (1LL<<digit)-1 <= x; ++digit);
+    --digit;
 
-    long long sum = (nOf2>>1)*digit;
+    long long sum = (1LL<<digit)*digit/2;
 
-    if (x >= nOf2)
-        sum += getZ(x-nOf2) + x-nOf2+1;
+    if (x >= (1LL<<digit))
+        sum += getZ(x-(1LL<<digit)) + x-(1LL<<digit)+1;
 
     return sum;
 }
