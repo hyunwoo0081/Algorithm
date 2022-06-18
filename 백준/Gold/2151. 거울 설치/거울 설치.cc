@@ -41,17 +41,9 @@ void solution() {
     visited[0][startY][startX] = 0;
     visited[1][startY][startX] = 0;
     for (dir = 0; dir < 4; ++dir) {
-        nx = startX + dx[dir];
-        ny = startY + dy[dir];
-        if (0 <= nx && nx < N && 0 <= ny && ny < N && map[ny][nx] != WALL) {
-            visited[dir%2][ny][nx] = 0;
-            q.emplace_back(nx*100+ny, dir);
-
-            if (map[ny][nx] == MIRROR) {
-                visited[!(dir%2)][ny][nx] = 1;
-                q.emplace_back(nx*100+ny, (dir+1)%4);
-                q.emplace_back(nx*100+ny, (dir+3)%4);
-            }
+        if (map[startY][startX] != WALL) {
+            visited[dir%2][startY][startX] = 0;
+            q.emplace_back(startX*100+startY, dir);
         }
     }
 
