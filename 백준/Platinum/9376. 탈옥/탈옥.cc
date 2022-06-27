@@ -1,7 +1,7 @@
 #include <iostream>
 #include <queue>
-#define OUTER 'o'
 #define WALL '*'
+#define EMPTY '.'
 #define DOOR '#'
 #define PERSON '$'
 
@@ -15,8 +15,8 @@ deque<pair<int, int>> q;
 int dx[] = {1, 0, -1, 0};
 int dy[] = {0, 1, 0, -1};
 
-void addMinLength(int startY, int startX, int H, int W) {
-    int x, y, count, nx, ny;
+void addDoorCount(int startY, int startX, int H, int W) {
+    int x, y, nx, ny, count;
     q.clear();
     for (y = 0; y < H+2; ++y)
         for (x = 0; x < W+2; ++x)
@@ -73,19 +73,18 @@ void solution() {
                         p2X = x, p2Y = y;
                 }
             }
-            map[y][0] = map[y][W + 1] = OUTER;
+            map[y][0] = map[y][W + 1] = EMPTY;
             doorCount[y][0] = doorCount[y][W + 1] = -1;
-
         }
         for (int x = 0; x < W+2; ++x) {
-            map[0][x] = map[H + 1][x] = OUTER;
+            map[0][x] = map[H + 1][x] = EMPTY;
             doorCount[0][x] = doorCount[H+1][x] = -1;
         }
 
 
-        addMinLength(0, 0, H, W);
-        addMinLength(p1Y, p1X, H, W);
-        addMinLength(p2Y, p2X, H, W);
+        addDoorCount(0, 0, H, W);
+        addDoorCount(p1Y, p1X, H, W);
+        addDoorCount(p2Y, p2X, H, W);
 
         int minLength = 1000000000;
         for (int y = 0; y < H+2; ++y) {
