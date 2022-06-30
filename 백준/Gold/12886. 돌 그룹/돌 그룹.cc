@@ -2,7 +2,7 @@
 
 using namespace std;
 
-bool visited[501][501][501] = {false};
+bool visited[751][751] = {false};
 
 void sortNum(int &a, int &b, int &c) {
     if (a > b) swap(a, b);
@@ -13,10 +13,10 @@ void sortNum(int &a, int &b, int &c) {
 bool stone(int a, int b, int c) {
     int na, nb, nc;
     if (a < 0 || b < 0 || c < 0) return false;
-    if (visited[a][b][c]) return false;
+    if (visited[a][b]) return false;
     if (a == b && b == c) return true;
 
-    visited[a][b][c] = true;
+    visited[a][b] = true;
 
     na = a+a, nb = b-a, nc = c;
     sortNum(na, nb, nc);
