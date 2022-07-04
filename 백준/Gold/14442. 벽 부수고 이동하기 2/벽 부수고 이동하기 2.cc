@@ -5,7 +5,7 @@
 using namespace std;
 
 bool map[SIZE][SIZE];
-int visited[11][SIZE][SIZE] = {false};
+bool visited[11][SIZE][SIZE] = {false};
 queue<pair<int, int>> q;
 int dx[] = {1, 0, -1, 0};
 int dy[] = {0, 1, 0, -1};
@@ -20,12 +20,10 @@ void solution() {
         cin >> s;
         for (x = 0; x < M; ++x) {
             map[y][x] = s[x] == '1';
-            for (k = 0; k <= K; ++k)
-                visited[k][y][x] = 0;
         }
     }
 
-    visited[0][0][0] = 1;
+    visited[0][0][0] = true;
     q.emplace(0, 100);
     while (!q.empty()) {
         x = q.front().first/SIZE;
@@ -34,7 +32,6 @@ void solution() {
         dist = q.front().second/100;
         q.pop();
 
-        if (dist > visited[k][y][x]) continue;
         if (x == M-1 && y == N-1) {
             result = dist;
             break;
@@ -45,12 +42,12 @@ void solution() {
             ny = y + dy[i];
             if (0 <= nx && nx < M && 0 <= ny && ny < N) {
                 if (!map[ny][nx] && !visited[k][ny][nx]) {
-                    visited[k][ny][nx] = dist + 1;
-                    q.emplace(nx*SIZE+ny, visited[k][ny][nx]*100 + k);
+                    visited[k][ny][nx] = true;
+                    q.emplace(nx*SIZE+ny, (dist + 1)*100 + k);
                 }
                 else if (map[ny][nx] && k < K && !visited[k+1][ny][nx]) {
-                    visited[k+1][ny][nx] = dist + 1;
-                    q.emplace(nx*SIZE+ny, visited[k+1][ny][nx]*100 + k+1);
+                    visited[k+1][ny][nx] = true;
+                    q.emplace(nx*SIZE+ny, (dist + 1)*100 + k+1);
                 }
             }
         }
