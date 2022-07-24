@@ -28,11 +28,9 @@ void solution() {
                 i++;
             }
             else {
-                if (abs(l1-l2) <= abs(blocks[i]-blocks[j])) {
-                    l1 = blocks[i];
-                    l2 = blocks[j];
-                }
-                i++, j--;
+                l1 = blocks[i];
+                l2 = blocks[j];
+                break;
             }
         }
 
