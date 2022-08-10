@@ -6,14 +6,10 @@ using namespace std;
 long long dp[3] = {0};
 
 void solution() {
-    bool isStart = false;
     string s;
     cin >> s;
 
     for (char c : s) {
-        if (!isStart && c != 'a') continue;
-        isStart = true;
-
         if (c == 'a')
             dp[0] = dp[0] ? (dp[0]*2 + 1) % MOD : 1;
         else if (c == 'b')
