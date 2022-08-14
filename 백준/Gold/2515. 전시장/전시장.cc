@@ -10,7 +10,7 @@ vector<pair<int, int>> paints;
 int binarySearch(int num) {
     int lo, hi, mid;
 
-    lo = 0, hi = paints.size()-1;
+    lo = 0, hi = dp.size();
     while (lo < hi) {
         mid = (lo + hi) / 2;
         if (paints[mid].first <= num)
@@ -34,10 +34,10 @@ void solution() {
     int j;
     for (int i = 0; i < paints.size(); i++) {
         j = binarySearch(paints[i].first - S);
-        C = 0;
-        if (j >= 0)
-            C = dp[j];
-        dp.push_back(max(C+paints[i].second, i > 0 ? dp[i-1] : 0));
+        C = j >= 0 ? dp[j] : 0;
+        H = i > 0 ? dp[i-1] : 0;
+
+        dp.push_back(max(C+paints[i].second, H));
     }
     cout << dp.back();
 }
