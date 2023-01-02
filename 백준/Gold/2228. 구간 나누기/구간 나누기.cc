@@ -15,13 +15,10 @@ int getMax(int s, int e, int m) {
     if (dp[s][m] != INF) return dp[s][m];
 
     int &cache = dp[s][m] = -INF;
-    for (int i = s; i <= e-2*m; ++i) {
-        for (int j = i; j <= e-2*m; ++j) {
-            int next = getMax(j+2, e, m-1);
-            if (next != -INF)
-                cache = max(cache, getSum(i, j) + next);
-        }
-    }
+    for (int i = s; i <= e-2*m; ++i)
+        for (int j = i; j <= e-2*m; ++j)
+            cache = max(cache, getSum(i, j) + getMax(j+2, e, m-1));
+
     return cache;
 }
 
