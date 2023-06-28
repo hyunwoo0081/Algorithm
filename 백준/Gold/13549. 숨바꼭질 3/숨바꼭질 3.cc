@@ -1,15 +1,14 @@
 #include <iostream>
 #include <deque>
-#define fastIO() ios_base::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr)
 #define SIZE 100001
 
 using namespace std;
 
-deque<int> dq;
+deque<pair<int, int>> dq;
 int dp[SIZE];
 
 void solution() {
-    int N, K;
+    int N, K, dist;
 
     cin >> N >> K;
 
@@ -21,33 +20,50 @@ void solution() {
     for (auto &init : dp)
         init = -1;
 
-    dq.push_front(N);
+    dq.emplace_front(N, 0);
     dp[N] = 0;
-    while (dq.front() != K) {
-        N = dq.front();
+    while (!dq.empty() && dq.front().first != K) {
+        N = dq.front().first;
+        dist = dq.front().second;
         dq.pop_front();
 
-        if (2*N < SIZE && dp[2*N] == -1) {
-            dq.push_front(2*N);
-            dp[2*N] = dp[N];
+        if (0 <= dp[N] && dp[N] < dist)
+            continue;
+        dp[N] = dist;
+
+        if (2*N < SIZE && dp[2*N] <= -1) {
+            dq.emplace_front(2*N, dist);
+            dp[2*N] = dist;
         }
 
         if (N+1 < SIZE && dp[N+1] == -1) {
-            dq.push_back(N+1);
-            dp[N+1] = dp[N]+1;
+            dq.emplace_back(N+1, dist+1);
+            dp[N+1] = -2;
         }
 
         if (N-1 > 0 && dp[N-1] == -1) {
-            dq.push_back(N-1);
-            dp[N-1] = dp[N]+1;
+            dq.emplace_back(N-1, dist+1);
+            dp[N-1] = -2;
         }
     }
+
+    while (!dq.empty()) {
+        N = dq.front().first;
+        dist = dq.front().second;
+        dq.pop_front();
+
+        if (0 <= dp[N] && dp[N] < dist)
+            continue;
+        dp[N] = dist;
+    }
+
     cout << dp[K];
 }
 
 int main() {
-    fastIO();
-    solution();
+    ios_base :: sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
 
-    return 0;
+    solution();
 }
