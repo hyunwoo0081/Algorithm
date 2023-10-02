@@ -14,8 +14,8 @@ void solution() {
     for (int i = 0; i < N; i++) {
         cnt = 0;
         for (int j = 0; j < K; j++)
-            cnt += arr[i*K + j];
-        result += cnt >= P;
+            cnt += !arr[i*K + j];
+        result += cnt < P;
     }
     cout << result;
 }
