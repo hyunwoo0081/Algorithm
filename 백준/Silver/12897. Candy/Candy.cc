@@ -7,17 +7,15 @@ using namespace std;
 void solution() {
     ll N, a, b;
 
-    a = b = 2;
+    a = 1;
+    b = 2;
     cin >> N;
     for (int i = 1; i < N; i++) {
         a = (2 + 3*b) % MOD;
         b = a;
     }
 
-    if (N == 1)
-        cout << 1;
-    else
-        cout << a;
+    cout << a;
 }
 
 int main(){
