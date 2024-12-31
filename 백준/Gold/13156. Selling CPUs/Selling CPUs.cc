@@ -15,15 +15,9 @@ void solution() {
             cin >> arr[j];
         }
 
-        if (i == 0) {
-            for (int j = 1; j <= C; j++) {
-                dp[j] = arr[j-1];
-            }
-        } else {
-            for (int j = C; j > 0; j--) {
-                for (int k = 1; k <= j; k++) {
-                    dp[j] = max(dp[j], dp[j-k] + arr[k-1]);
-                }
+        for (int j = C; j > 0; j--) {
+            for (int k = 1; k <= j; k++) {
+                dp[j] = max(dp[j], dp[j-k] + arr[k-1]);
             }
         }
     }
