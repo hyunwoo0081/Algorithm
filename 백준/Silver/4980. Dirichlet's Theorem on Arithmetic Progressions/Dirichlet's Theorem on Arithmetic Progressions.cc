@@ -13,7 +13,7 @@ int main() {
     }
     
     for (int i = 2; i <= SIZE; i++) {
-        for (int j = 2; i*j <= SIZE; j++) {
+        for (long long j = i; i*j <= SIZE; j++) {
             isPrime[i*j] = false;
         }
     }
