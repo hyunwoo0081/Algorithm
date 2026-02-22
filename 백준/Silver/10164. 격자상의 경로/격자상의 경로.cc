@@ -14,8 +14,8 @@ int main() {
     int X = (K-1) % M;
     
     if (K == 0) {
-        Y = N;
-        X = M;
+        Y = N-1;
+        X = M-1;
     }
     
     for (int y = 0; y <= Y; y++) {
