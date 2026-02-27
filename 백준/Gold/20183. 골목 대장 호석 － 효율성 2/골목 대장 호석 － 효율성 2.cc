@@ -60,6 +60,10 @@ bool dijstra(int start, int end, int thres, ll C, int N) {
 }
 
 int main() {
+    ios_base :: sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
     int N, M, A, B, from, to, cost;
     int nCostSize, left, right, mid;
     ll C;
@@ -85,7 +89,7 @@ int main() {
             costs[nCostSize++] = costs[i];
         }
     }
-    costSize = nCostSize;
+    costSize = max(1, nCostSize);
     
     // paramatric search
     left = 0;
