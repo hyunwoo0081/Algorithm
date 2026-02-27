@@ -10,9 +10,8 @@
 
 using namespace std;
 
-int costs[EDGE_SIZE];
-int costSize = 0;
-vector<pair<int, int>> edges[NODE_SIZE];
+vector<ll> costs;
+vector<pair<int, ll>> edges[NODE_SIZE];
 priority_queue<pair<ll, int>> pq;
 ll visited[NODE_SIZE];
 
@@ -22,7 +21,7 @@ void initVisited(int N) {
     }
 }
 
-bool dijstra(int start, int end, int thres, ll C, int N) {
+bool dijstra(int start, int end, ll thres, ll C, int N) {
     initVisited(N);
     
     pq.emplace(0, start);
@@ -45,9 +44,9 @@ bool dijstra(int start, int end, int thres, ll C, int N) {
         for (auto edge : edges[node]) {
             int next = edge.first;
             int d = edge.second;
-            if (d <= thres && dist+d <= C && dist+d < visited[next]) {
-                pq.emplace(-(dist+d), next);
+            if (d <= thres && dist+d < visited[next]) {
                 visited[next] = dist + d;
+                pq.emplace(-visited[next], next);
             }
         }
     }
@@ -56,7 +55,7 @@ bool dijstra(int start, int end, int thres, ll C, int N) {
         pq.pop();
     }
     
-    return visited[end] != INF;
+    return visited[end] <= C;
 }
 
 int main() {
@@ -65,8 +64,7 @@ int main() {
     cout.tie(NULL);
     
     int N, M, A, B, from, to, cost;
-    int nCostSize, left, right, mid;
-    ll C;
+    ll left, right, mid, C, result;
     
     cin >> N >> M >> A >> B >> C;
     A--, B--;
@@ -77,41 +75,31 @@ int main() {
         edges[from].emplace_back(to, cost);
         edges[to].emplace_back(from, cost);
         
-        costs[costSize++] = cost;
+        costs.push_back(cost);
     }
     
-    nCostSize = 0;
-    sort(costs, costs + costSize);
     
-    // delete duplicate
-    for (int i = 1; i < costSize; i++) {
-        if (costs[nCostSize] != costs[i]) {
-            costs[nCostSize++] = costs[i];
-        }
-    }
-    costSize = nCostSize+1;
+    sort(costs.begin(), costs.end());
+    costs.erase(unique(costs.begin(), costs.end()), costs.end());
     
     // paramatric search
     left = 0;
-    right = costSize - 1;
-    while (left < right) {
+    right = costs.size() - 1;
+    result = -1;
+    while (left <= right) {
         mid = (left + right) / 2;
         
         // cout << costs[mid] << " >> \n";
         if (dijstra(A, B, costs[mid], C, N)) {
-            right = mid;
+            result = costs[mid];
+            right = mid - 1;
         }
         else {
             left = mid + 1;
         }
     }
     
-    if (dijstra(A, B, costs[left], C, N)) {
-        cout << costs[left];
-    }
-    else {
-        cout << -1;
-    }
+    cout << result;
     
     return 0;
 }
