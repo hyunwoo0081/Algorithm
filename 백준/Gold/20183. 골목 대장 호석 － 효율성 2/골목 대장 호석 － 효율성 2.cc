@@ -29,7 +29,7 @@ bool dijstra(int start, int end, int thres, ll C, int N) {
     visited[start] = 0;
     
     while (!pq.empty()) {
-        int dist = -pq.top().first;
+        ll dist = -pq.top().first;
         int node = pq.top().second;
         pq.pop();
         
@@ -89,7 +89,7 @@ int main() {
             costs[nCostSize++] = costs[i];
         }
     }
-    costSize = max(1, nCostSize);
+    costSize = nCostSize+1;
     
     // paramatric search
     left = 0;
@@ -106,7 +106,7 @@ int main() {
         }
     }
     
-    if (dijstra(A, B, costs[right], C, N)) {
+    if (dijstra(A, B, costs[left], C, N)) {
         cout << costs[left];
     }
     else {
