@@ -12,6 +12,10 @@ priority_queue<pair<ll, int>> pq;
 ll visited[SIZE] = {0};
 
 int main() {
+    ios_base :: sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
     ll dist, nd;
     int N, M, a, b, d;
     cin >> N >> M;
