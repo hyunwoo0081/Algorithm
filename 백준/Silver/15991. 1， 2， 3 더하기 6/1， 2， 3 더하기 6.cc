@@ -1,6 +1,6 @@
 #include <iostream>
 #define MOD 1'000'000'009
-#define SIZE 100'000
+#define SIZE 50'000
 
 using namespace std;
 
